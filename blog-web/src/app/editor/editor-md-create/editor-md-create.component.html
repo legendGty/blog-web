@@ -1,0 +1,15 @@
+<div class="editor-md-create">
+  <div class="article-nav">
+    <button  nz-button nzType="default" nzDanger><i nz-icon nzType="left"></i>返回</button>
+    <span>
+      <button nz-button nzType="primary"  (click)="handleSave()">保存</button>
+      <button nz-button nzType="primary" (click)="handleConfirm()">发布</button>
+    </span>
+  </div>
+  <div id="authorId" >
+    <textarea id="mark" class="editormd-markdown-textarea" name="markdown1"></textarea>
+    <!-- html textarea 需要开启配置项 saveHTMLToTextarea == true -->
+    <textarea class="editormd-html-textarea" name="html1"></textarea>
+  </div>
+</div>
+

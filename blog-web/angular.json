@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "blog-web": {
@@ -25,12 +25,28 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/md_editor/css/editormd.css",
+              "src/assets/md_editor/lib/codemirror/codemirror.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js",
+              "src/assets/md_editor/editormd.js",
+              "src/assets/md_editor/lib/flowchart.min.js",
+              "src/assets/md_editor/lib/jquery.flowchart.min.js",
+              "src/assets/md_editor/lib/marked.min.js",
+              "src/assets/md_editor/lib/prettify.min.js",
+              "src/assets/md_editor/lib/raphael.min.js",
+              "src/assets/md_editor/lib/underscore.min.js",
+              "src/assets/md_editor/lib/sequence-diagram.min.js"            ]
           },
           "configurations": {
             "production": {
@@ -123,6 +139,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "blog-web"
+    }
+  },
+  "defaultProject": "blog-web",
+  "cli": {
+    "analytics": false
+  }
 }

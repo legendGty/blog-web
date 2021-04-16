@@ -1,0 +1,46 @@
+<div class="dynamic">
+  <!-- 333 -->
+  <app-emoji-pick (publishDynamic)="refreshCurrentList($event)"></app-emoji-pick>
+  <div class="content">
+    <nz-skeleton *ngIf="loading" class="skeletion" [nzActive]="true" [nzLoading]="loading" [nzAvatar]="true"></nz-skeleton>
+    <div class="dynamic-main">
+      <div class="dynamic-card" *ngFor="let dynamic of dynamicList">
+        <div class="card-header">
+          <div class="card-header-left">
+            <nz-avatar nzIcon="user" [nzSrc]="baseUrl + dynamic?.author_user_info?.headerImg"></nz-avatar>
+            <span class="author-name">
+              <span>{{ dynamic?.author_user_info?.userName }}</span>
+              <span>{{ dynamic?.updatedAt | date }}</span>
+            </span>
+          </div>
+          <div class="card-header-right">
+            <button nz-button nzType=default>关注</button>
+          </div>
+        </div>
+        <div class="card-content">
+          <p>
+            {{ dynamic?.content }}
+          </p>
+          <div *ngIf="dynamic?.link_parse_content" (click)="goNewLink(dynamic?.link_parse_content?.url)" class="insert-content">
+            <div class="left">
+              <h3 [title]="dynamic?.link_parse_content?.title" class="text-hidden">{{ dynamic?.link_parse_content?.title }}</h3>
+              <span [title]="dynamic?.link_parse_content?.desc" class="text2-hidden">{{ dynamic?.link_parse_content?.desc }}</span>
+              <span [title]="dynamic?.link_parse_content?.url" class="text-hidden">{{ dynamic?.link_parse_content?.url }}</span>
+            </div>
+            <div class="right">
+              <img [src]="dynamic?.link_parse_content?.thumb ? (dynamic?.link_parse_content?.thumb | safeUrl) : defaultLinkImg" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <li>\ud83c\udf3d</li> -->
+<ul>
+  <!-- <li *ngFor="let a of d" [innerHTML]="parse">
+  </li> -->
+</ul>
+
+
+

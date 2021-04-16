@@ -1,0 +1,16 @@
+<ul nz-menu nzMode="horizontal">
+  <li nz-menu-item nzMatchRouter nzMatchRouterExact>
+    <!-- <i nz-icon nzType="mail"></i> -->
+    <a [routerLink]="['./subscribe']">已关注标签</a>
+  </li>
+  <li nz-menu-item  nzMatchRouter>
+    <a [routerLink]="['all']">全部标签</a>
+  </li>
+  <li nz-menu-item  nzMatchRouter>
+    <a [routerLink]="['create']">标签创建</a>
+  </li>
+  <li nz-menu-item  nzMatchRouter>
+    <a [routerLink]="['manager']">标签管理</a>
+  </li>
+</ul>
+<router-outlet></router-outlet>

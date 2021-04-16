@@ -1,0 +1,25 @@
+
+<div class="home">
+  <div class="home-nav">
+    <ul nz-menu nzMode="horizontal">
+      <li nz-menu-item nzMatchRouter nzMatchRouterExact>
+        <!-- <i nz-icon nzType="mail"></i> -->
+        <a [routerLink]="['./']">全部</a>
+      </li>
+      <!-- <li nz-menu-item >
+        <a [routerLink]="['hot']" nzMatchRouter>热门</a>
+      </li> -->
+      <ng-container *ngFor="let item of category">
+        <li nz-menu-item  nzMatchRouter>
+          <a [routerLink]="[item.category]">{{ item.category }}</a>
+        </li>
+      </ng-container>
+      <!-- <li nz-menu-item nzMatchRouter>
+        <a [routerLink]="['pick']">分类</a>
+      </li> -->
+    </ul>
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

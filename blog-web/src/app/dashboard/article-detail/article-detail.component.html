@@ -1,0 +1,208 @@
+
+<div class="article-detail">
+  <div class="operations">
+    <nz-badge [nzCount]="article?.digger_count">
+      <span [ngClass]="{ 'active': article?.digger_list.length > 0 }" (click)="handleDigger(article._id)">
+        <i [nzTheme]="article?.digger_list.length > 0 ? 'fill' : 'outline'" nz-icon nzType="like"></i>
+      </span>
+    </nz-badge>
+    <nz-badge [nzCount]="article?.collection_count">
+      <span [ngClass]="{ 'active': article?.collection_list.length > 0 }" (click)="handleCollection(article._id)">
+        <i [nzTheme]="article?.collection_list.length > 0 ? 'fill' : 'outline'" nz-icon nzType="star"></i>
+      </span>
+    </nz-badge>
+    <nz-badge [nzCount]="article?.comment_count">
+      <nz-anchor [nzAffix]="false">
+        <nz-link id="msg" [nzTitle]="msg" nzHref="#comment"></nz-link>
+      </nz-anchor>
+    </nz-badge>
+    <ng-template #msg>
+      <span><i nz-icon nzType="message"></i></span>
+    </ng-template>
+  </div>
+  <div class="article-detail-left">
+    <nz-back-top [nzTemplate]="tpl" [nzVisibilityHeight]="100">
+      <ng-template #tpl>
+        <div class="ant-back-top-inner">UP</div>
+      </ng-template>
+    </nz-back-top>
+    <div class="header-info">
+        <div class="header-left">
+          <nz-avatar [nzSize]="64" nzIcon="user" [nzSrc]="baseUrl +  article?.author?.headerImg"></nz-avatar>
+          <span class="name-container">
+            <span class="name-line">{{ article?.author?.userName }}</span>
+            <span class="ft12">
+              <span>
+                {{ article?.createdAt | date:'yyyy年MM月dd日' }} &nbsp;
+              </span>
+              <span>{{ article?.view_count }}人阅读</span>
+            </span>
+          </span>
+        </div>
+        <button nz-button type="primary">
+          关注
+        </button>
+    </div>
+    <div class="coverImg">
+      <h1>{{ article?.title }}</h1>
+      <p>{{ article?.description }}</p>
+      <span>
+        <img [src]="baseUrl + article?.headImgUrl" alt="">
+      </span>
+    </div>
+    <!-- <div class="edit-html-content editormd-html-textarea editormd-markdown-textarea editormd-preview-container" [innerHTML]="article?.htmlStr | safeHtml"></div> -->
+    <!-- <div class="markdown-body editormd-html-preview">{{ article.markDownStr }}</div> -->
+    <div id="editorMdView"></div>
+    <div class="linear">
+      <span></span>
+    </div>
+    <div class="comment" #hrefTo>
+      <nz-comment>
+        <nz-avatar (click)="goUserPage(article?.author?._id)" nz-comment-avatar nzIcon="user" [nzSrc]="baseUrl+ article?.author?.headerImg"></nz-avatar>
+        <nz-comment-content>
+          <nz-form-item>
+            <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
+          </nz-form-item>
+          <nz-form-item class="fr">
+            <button nz-button nzType="primary" [nzLoading]="loading" [disabled]="!inputValue" (click)="handleSubmit()">
+              发布
+            </button>
+          </nz-form-item>
+        </nz-comment-content>
+      </nz-comment>
+    </div>
+    <div class="comment-content" id="comment">
+      <!-- level1 -->
+      <nz-comment *ngFor="let comment of comments"  [nzAuthor]="author" [nzDatetime]="">
+        <ng-template #author>
+          <span class="f14 point" (click)="goUserPage(comment?.comment_user_info?._id)">
+            {{ comment.comment_user_info?.userName }}
+          </span>
+          <span class="ident-bc" [ngClass]="{'visitor': !comment.is_author}">{{ comment.is_author ? '作者' : '游客' }}</span>
+        </ng-template>
+        <nz-avatar nz-comment-avatar nzIcon="user"
+          (click)="goUserPage(comment?.comment_user_info?._id)"
+          [nzSrc]="baseUrl + comment?.comment_user_info?.headerImg"></nz-avatar>
+        <nz-comment-content>
+          <p>{{ comment.comment_content }}</p>
+        </nz-comment-content>
+        <!-- <nz-comment-action>
+          <i nz-tooltip nzTitle="Like" nz-icon nzType="like" [nzTheme]="likes > 0 ? 'twotone' : 'outline'" (click)="like()"></i>
+          <span class="count like">{{ likes }}</span>
+        </nz-comment-action>
+        <nz-comment-action>
+          <i nz-tooltip nzTitle="Dislike" nz-icon nzType="dislike" [nzTheme]="dislikes > 0 ? 'twotone' : 'outline'" (click)="dislike()"></i>
+          <span class="count dislike">{{ dislikes }}</span>
+        </nz-comment-action> -->
+        <nz-comment-action>
+          <span (click)="showReply($event, comment)">
+            <i  nz-icon nzType="message"></i>
+            Reply to
+          </span>
+        </nz-comment-action>
+        <nz-form-item *ngIf="comment.show_reply" class="child-reply">
+            <textarea (click)="stop($event)" appAutoFocus  [placeholder]="'@' + comment.comment_user_info.userName + '...'" class="child-input" [(ngModel)]="replyInputValue" nz-input rows="4"></textarea>
+            <span  class="reply2-button">
+              <button class="fr br10" nz-button nzType="primary" [nzLoading]="replyLoading" [disabled]="!replyInputValue" (click)="handleReplySubmit($event, comment, comment)">
+                发布
+              </button>
+            </span>
+
+          <!-- (blur)="hidReply($event, comment)" -->
+        </nz-form-item>
+        <div *ngIf="comment.comment_level2">
+          <nz-comment [nzAuthor]="author2" *ngFor="let item of comment.comment_level2">
+            <ng-template #author2>
+              <span class="f14 point" (click)="goUserPage(item?.comment_user_info?._id)">
+                {{ item.comment_user_info?.userName }}
+              </span>
+              <span class="ident-bc" [ngClass]="{'visitor': !item.is_author}">{{ item.is_author ? '作者' : '游客' }}</span>
+            </ng-template>
+            <nz-avatar nz-comment-avatar nzIcon="user"
+              (click)="goUserPage(item?.comment_user_info?._id)"
+              [nzSrc]="baseUrl+ item.comment_user_info?.headerImg"></nz-avatar>
+            <nz-comment-content>
+              <p>回复<span class="reply-bc"> @ <span (click)="goUserPage(item?.reply_user_info?._id)">{{item.reply_user_info.userName}}</span></span>：{{ item.comment_content }}</p>
+            </nz-comment-content>
+            <nz-comment-action>
+              <span (click)="showReply($event, item)">
+                <i  nz-icon nzType="message"></i>
+                Reply to
+              </span>
+            </nz-comment-action>
+            <nz-form-item *ngIf="item.show_reply" class="child-reply2">
+              <textarea (click)="stop($event)" appAutoFocus  [placeholder]="'@' + item.comment_user_info.userName + '...'" class="child-input" [(ngModel)]="replyInputValue" nz-input rows="4"></textarea>
+              <span class="reply2-button">
+                <button class="fr br10" nz-button nzType="primary" [nzLoading]="replyLoading" [disabled]="!replyInputValue" (click)="handleReplySubmit($event, item, comment)">
+                  发布
+                </button>
+              </span>
+
+            <!-- (blur)="hidReply($event, comment)" -->
+          </nz-form-item>
+          </nz-comment>
+        </div>
+      </nz-comment>
+    </div>
+  </div>
+  <div class="article-detail-right">
+  <div class="author-info">
+    <nz-card nzHoverable="true" [nzLoading]="'false'" [nzCover]="coverTemplate" [nzActions]="[github, weibo, alipay]">
+      <nz-card-meta [nzTitle]="titleTemplate" [nzDescription]="descriptionTemplate" [nzAvatar]="avatarTemplate"></nz-card-meta>
+    </nz-card>
+    <ng-template #titleTemplate>
+      <span [routerLink]="['/user', article?.author?._id]">
+        {{ article?.author?.userName }}
+      </span>
+    </ng-template>
+    <ng-template #descriptionTemplate>
+      <p>
+        <i class="icon-color-verify mr" nz-icon nzType="verified" nzTheme="outline"></i>
+        {{ article?.author.work }}
+      </p>
+      <p class="fx">
+        <i class="icon-color-chart mr" nz-icon nzType="area-chart" nzTheme="outline"></i>
+        <span class="article-statistic">
+          <span>作者共发表：{{ user_article_statistic?.article_amount }} &nbsp;&nbsp; 阅读人数： {{ user_article_statistic?.view_count }}</span>
+          <!-- <span></span> -->
+          <span>收获点赞： {{ user_article_statistic?.digger_count }} &nbsp;&nbsp; 收获收藏： {{ user_article_statistic?.collection_count }}</span>
+          <!-- <span></span> -->
+        </span>
+      </p>
+      <p style="display: flex;">
+        <i class="icon-color-tag mr" nz-icon nzType="tags" nzTheme="fill"></i>
+        <span>
+          <nz-tag [nzColor]="'blue'">无敌小学生</nz-tag>
+          <nz-tag [nzColor]="'volcano'">前端大神</nz-tag>
+          <nz-tag [nzColor]="'green'">敲代码</nz-tag>
+        </span>
+      </p>
+    </ng-template>
+    <ng-template #avatarTemplate>
+      <nz-avatar [nzSrc]="baseUrl+ article?.author?.headerImg"></nz-avatar>
+    </ng-template>
+    <ng-template #coverTemplate>
+      <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+    </ng-template>
+    <ng-template #github>
+      <i nz-icon nzType="github" nzTheme="outline"></i>
+    </ng-template>
+    <ng-template #weibo>
+      <i nz-icon nzType="weibo-circle" nzTheme="outline"></i>
+    </ng-template>
+    <ng-template #alipay>
+      <i nz-icon nzType="alipay" nzTheme="outline"></i>
+    </ng-template>
+  </div>
+  <nz-affix [nzOffsetTop]="'offsetTop'">
+    <div>
+      <h3 class="toc-title">目录</h3>
+      <div id="article-toc">
+        <!-- this is toc content -->
+      </div>
+    </div>
+  </nz-affix>
+  </div>
+</div>
+
+

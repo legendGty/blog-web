@@ -1,0 +1,39 @@
+<div class="article">
+  <cdk-virtual-scroll-viewport itemSize="200" class="article-infinite-container">
+    <nz-list nzSplit nzItemLayout="vertical">
+      <nz-list-item  *cdkVirtualFor="let item of ds">
+        <nz-skeleton *ngIf="!item" [nzAvatar]="true" [nzParagraph]="{ rows: 1 }"></nz-skeleton>
+
+        <nz-list-item-meta *ngIf="item">
+          <nz-list-item-meta-avatar [nzSrc]="baseUrl + item?.author?.headerImg"> </nz-list-item-meta-avatar>
+          <!-- <nz-list-item-meta-description>
+            {{ item.author.userName }}
+          </nz-list-item-meta-description> -->
+          <nz-list-item-meta-description>
+            <span class="author-name">{{ item.author.userName }}</span>  发布于 {{ item.createdAt | date:'yyyy-MM-dd HH:mm:ss' }}
+          </nz-list-item-meta-description>
+          <nz-list-item-meta-title>
+            <a (click)="goDetail(item._id)">{{ item.title }}</a>
+          </nz-list-item-meta-title>
+        </nz-list-item-meta>
+          <span>{{ item.description }}</span>
+        <ul nz-list-item-actions>
+          <i nz-icon nzType="eye" nzTheme="outline"></i>
+          <nz-list-item-action><i nz-icon nzType="eye" style="margin-right: 8px;"></i> {{ item.view_count }}</nz-list-item-action>
+          <nz-list-item-action>
+            <span (click)="handleDigger(item._id, item)" [ngClass]="{ 'active': item.digger_list.length > 0 }">
+              <i  nz-icon nzType="like" [nzTheme]="item.digger_list.length > 0 ? 'fill' : 'outline'" style="margin-right: 8px;"></i>
+              {{ item.digger_count }}</span>
+          </nz-list-item-action>
+          <nz-list-item-action>
+            <span (click)="goDetail(item._id, 'comment')"><i nz-icon nzType="message" style="margin-right: 8px;"></i> {{ item.comment_count }}</span>
+          </nz-list-item-action>
+        </ul>
+        <nz-list-item-extra>
+          <img width="300" height="168" alt="logo" (click)="goDetail(item._id)" [src]="baseUrl + item.headImgUrl" />
+        </nz-list-item-extra>
+
+      </nz-list-item>
+    </nz-list>
+  </cdk-virtual-scroll-viewport>
+</div>

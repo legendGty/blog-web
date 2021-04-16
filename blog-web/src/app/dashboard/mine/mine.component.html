@@ -1,0 +1,15 @@
+<!-- <a [routerLink]="['']">个人资料</a>
+<a [routerLink]="['person-blog']">我的阅文</a> -->
+<ul nz-menu nzMode="horizontal">
+  <li nz-menu-item nzMatchRouter nzMatchRouterExact>
+    <!-- <i nz-icon nzType="mail"></i> -->
+    <a [routerLink]="['./']">个人资料</a>
+  </li>
+  <!-- <li nz-menu-item >
+    <a [routerLink]="['hot']" nzMatchRouter>热门</a>
+  </li> -->
+  <li nz-menu-item  nzMatchRouter>
+    <a [routerLink]="['person-blog']">我的阅文</a>
+  </li>
+</ul>
+<router-outlet></router-outlet>

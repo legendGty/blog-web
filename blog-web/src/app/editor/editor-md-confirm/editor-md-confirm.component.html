@@ -1,0 +1,76 @@
+<div class="edit-confirm">
+  <form nz-form [formGroup]="form">
+    <nz-form-item>
+      <nz-form-label nzRequired nzFor="title">标题</nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="title">
+        <nz-input-group>
+          <input type="text"
+            nz-input
+            formControlName="title"
+            placeholder="请输入文章标题" />
+        </nz-input-group>
+
+          <ng-template #title>
+            <span *ngIf="form.get('title').dirty && form.get('title').hasError('required')">請輸入标题</span>
+            <span *ngIf="form.get('title').dirty && form.get('title').hasError('maxlength')">50</span>
+          </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzRequired nzFor="desc">简介</nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="description">
+        <nz-input-group [nzSuffix]="textAreaClearTpl"  class="ant-input-affix-wrapper-textarea-with-clear-btn">
+          <textarea
+            nz-input
+            placeholder="请输入文章的简介"
+            formControlName="description"
+            [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+          ></textarea>
+        </nz-input-group>
+        <ng-template #textAreaClearTpl><i
+          nz-icon
+          class="ant-input-textarea-clear-icon"
+          nzTheme="fill"
+          nzType="close-circle"
+          *ngIf="form.get('description').value"
+          (click)="form.get('description').setValue(null)"
+        ></i
+      ></ng-template>
+          <ng-template #description>
+            <span *ngIf="form.get('description').dirty && form.get('description').hasError('required')">请输入文章的简介</span>
+            <span *ngIf="form.get('description').dirty && form.get('description').hasError('maxlength')">100</span>
+          </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzRequired>添加分类</nz-form-label>
+      <nz-form-control>
+        <span class="category" *ngFor="let item of categorys">
+          <nz-tag nzMode="checkable" (click)="categoryClick(item)" [nzChecked]="item?.checked" (nzCheckedChange)="checkChange($event)">{{item.category}}</nz-tag>
+        </span>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired>上传封面图</nz-form-label>
+      <nz-form-control>
+        <nz-upload
+        class="avatar-uploader"
+        [nzAction]="url"
+        [nzShowUploadList]="false"
+        nzName="file"
+        nzListType="picture-card"
+        [nzBeforeUpload]="beforeUpload"
+        (nzChange)="handleChange($event)"
+      >
+        <ng-container *ngIf="!avatarUrl">
+          <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+          <div class="ant-upload-text">Upload</div>
+        </ng-container>
+        <img *ngIf="avatarUrl" [src]="avatarUrl" style="width: 100%" />
+      </nz-upload>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

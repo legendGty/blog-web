@@ -1,0 +1,87 @@
+.post-info {
+  background: #fff;
+  padding: 20px;
+  margin-top: 20px;
+  h3 {
+    font-size: 20px;
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 2px solid #3f51b54d;
+  }
+  .upload{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &:hover .saveUpload{
+      display: block;
+    }
+    span {
+      font-size: 12px;
+      color: #ff2268;
+    }
+    ::ng-deep .ant-upload-picture-card-wrapper {
+      width: unset;
+    }
+    .saveUpload {
+      cursor: pointer;
+      display: none;
+      font-size: 30px;
+      color: #2196F3;
+
+    }
+    .left {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .reset-group {
+    display: flex;
+    align-items: center;
+  }
+  .input-action {
+    margin-left: 16px;
+    i {
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .cancel {
+      color: rgb(197, 30, 30);
+      margin-right: 20px;
+    }
+    .confirm {
+      color: #2196F3;
+    }
+  }
+  ::ng-deep .ant-form-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #cecece47;
+    margin-bottom: unset;
+    min-height: 80px;
+    .input-reset {
+      background: none;
+      border: none;
+      border-radius: 20px;
+      height: 50px;
+      width: 85%;
+      // &:focus{
+      //   border: unset;
+      //   box-shadow: unset;
+      // }
+    }
+  }
+  ::ng-deep .ant-form-item-label {
+    text-align: unset;
+    label {
+      color: #655d5f;
+      font-size: 16px;
+      font-weight: 550;
+    }
+  }
+  .avatar {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #ddd;
+    margin-right: 20px;
+  }
+}

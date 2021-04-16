@@ -1,0 +1,14 @@
+<div class="tag-card" *ngIf="tag">
+  <img [src]="tag.icon" alt="">
+  <nz-tag class="nz-tag" [style.color]="tag.tag_color" [nzColor]="tag.tag_background">{{ tag.tag_content }}</nz-tag>
+  <span>
+    <span>关注人数:{{ tag.concern_user_count }}&nbsp;</span>
+    <span>文章数:{{ tag.post_article_count }}&nbsp;</span>
+  </span>
+  <button *ngIf="!userTags.includes(tag._id)" (click)="addTag(tag)" class="btn" nz-button nzType="primary">
+    点击关注
+  </button>
+  <button *ngIf="userTags.includes(tag._id)" (click)="CancelTag(tag)" class="btn" nzDanger nz-button nzType="default">
+    取消关注
+  </button>
+</div>

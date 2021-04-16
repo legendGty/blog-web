@@ -1,0 +1,134 @@
+<div class="post-info">
+  <h3>个人信息</h3>
+  <form nz-form [formGroup]="form">
+    <nz-form-item>
+      <nz-form-label nzSpan="4">头像</nz-form-label>
+      <nz-form-control>
+        <div class="upload">
+          <div class="left">
+            <img class="avatar" [src]="user?.headerImg ? (baseUrl + user?.headerImg) :  avatarUrl"/>
+            <nz-upload
+              class="avatar-uploader"
+              [nzAction]="url"
+              [nzShowUploadList]="false"
+              nzName="file"
+              nzListType="picture-card"
+              [nzBeforeUpload]="beforeUpload"
+              (nzChange)="handleChange($event)"
+            >
+              <ng-container>
+                <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+                <div class="ant-upload-text">上传</div>
+              </ng-container>
+              <!-- <img *ngIf="avatarUrl" [src]="avatarUrl" style="width: 100%" /> -->
+            </nz-upload>
+            <span>
+              <i>(支持 jpg、png、jpeg 格式大小 5M 以内的图片)</i>
+            </span>
+          </div>
+          <i class="saveUpload" title="保存" nz-icon nzType="check" nzTheme="outline"></i>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzFor="username">用户名</nz-form-label>
+      <nz-form-control>
+        <nz-input-group>
+          <input type="text"
+            nz-input
+            class="input-reset"
+            formControlName="username"
+            [placeholder]="user?.userName" />
+        </nz-input-group>
+<!--
+          <ng-template #name>
+            <span *ngIf="form.get('username').dirty && form.get('username').hasError('required')">請輸入用戶名</span>
+            <span *ngIf="form.get('username').dirty && form.get('username').hasError('maxlength')">用戶名長度爲255</span>
+            <span *ngIf="form.get('username').dirty && form.get('username').hasError('userInputErr')">username input error</span>
+          </ng-template> -->
+      </nz-form-control>
+  </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzFor="work">工作职位</nz-form-label>
+      <nz-form-control [nzErrorTip]="work">
+        <nz-input-group  class="reset-group">
+          <input type="text"
+            nz-input
+            class="input-reset"
+            (focus)="inputFocus('work')"
+            (click)="$event.stopPropagation()"
+            #workInput
+            formControlName="work"
+            [placeholder]="user?.work || '请输入你的工作'" />
+            <span class="input-action">
+              <i *ngIf="showEdit.work" title="编辑" (click)="handleEdit($event,workInput,'work')" nz-icon nzType="edit" nzTheme="outline"></i>
+              <span *ngIf="!showEdit.work">
+                <i (click)="CloseEdit($event, 'work')" title="取消" class="cancel" nz-icon nzType="close" nzTheme="outline"></i>
+                <i (click)="handleSave($event, 'work')" title="保存" class="confirm" nz-icon nzType="check" nzTheme="outline"></i>
+              </span>
+            </span>
+        </nz-input-group>
+
+          <ng-template #work>
+            <span *ngIf="form.get('work').dirty && form.get('work').hasError('maxlength')">最多输入10个字符</span>
+          </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzFor="skill">技能包</nz-form-label>
+      <nz-form-control [nzErrorTip]="skill">
+        <nz-input-group  class="reset-group">
+          <input type="text"
+            nz-input
+            class="input-reset"
+            (focus)="inputFocus('skill')"
+            (click)="$event.stopPropagation()"
+            formControlName="skill"
+            #skillInput
+            [placeholder]="user?.skill || '请输入你的技能包'" />
+            <span class="input-action">
+              <i *ngIf="showEdit.skill" title="编辑" (click)="handleEdit($event,skillInput,'skill')" nz-icon nzType="edit" nzTheme="outline"></i>
+              <span *ngIf="!showEdit.skill">
+                <i (click)="CloseEdit($event, 'skill')" title="取消" class="cancel" nz-icon nzType="close" nzTheme="outline"></i>
+                <i title="保存" (click)="handleSave($event, 'skill')" class="confirm" nz-icon nzType="check" nzTheme="outline"></i>
+              </span>
+            </span>
+        </nz-input-group>
+
+          <ng-template #skill>
+            <span *ngIf="form.get('skill').dirty && form.get('skill').hasError('maxlength')">最多输入20个字符</span>
+          </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzFor="desc">人生信条</nz-form-label>
+      <nz-form-control [nzErrorTip]="desc">
+        <nz-input-group class="reset-group">
+          <input type="text"
+            nz-input
+            (focus)="inputFocus('desc')"
+            (click)="$event.stopPropagation()"
+            class="input-reset"
+            #descInput
+            formControlName="desc"
+            [placeholder]="user?.desc || '请输入你的人生信条'" />
+            <span class="input-action">
+              <i *ngIf="showEdit.desc" title="编辑" (click)="handleEdit($event, descInput,'desc')" nz-icon nzType="edit" nzTheme="outline"></i>
+              <span *ngIf="!showEdit.desc">
+                <i (click)="CloseEdit($event, 'desc')" title="取消" class="cancel" nz-icon nzType="close" nzTheme="outline"></i>
+                <i title="保存" (click)="handleSave($event, 'desc')" class="confirm" nz-icon nzType="check" nzTheme="outline"></i>
+              </span>
+            </span>
+        </nz-input-group>
+
+          <ng-template #desc>
+            <span *ngIf="form.get('desc').dirty && form.get('desc').hasError('maxlength')">最多输入50个字符</span>
+          </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+    <!-- <button nz-button nzType="primary">保存更改</button> -->
+</div>

@@ -1,0 +1,68 @@
+.logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 28px 16px 0;
+  float: left;
+  overflow: hidden;
+  cursor: pointer;
+  img {
+    width: 116px;
+    margin-top: -35px;
+  }
+}
+
+.header-menu {
+  line-height: 64px;
+}
+
+li.reset-menu-item {
+  border: unset;
+  cursor: unset;
+  &:hover {
+    border: unset;
+  }
+}
+
+.message {
+  padding-right: 0;
+  i {
+    cursor: pointer;
+    font-size: 18px;
+    margin-right: unset;
+  }
+}
+
+.reset-search {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 64px;
+  button > i {
+    margin-right: unset;
+  }
+}
+
+.menu-reset {
+  white-space: unset;
+}
+
+.ant-layout-header {
+  background: 0;
+  height: unset;
+  min-height: 64px !important;
+}
+
+
+::ng-deep .app-main-content {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+  .ant-layout-content {
+    width: 80%;
+    min-height: 80vh;
+    flex: none;
+  }
+}

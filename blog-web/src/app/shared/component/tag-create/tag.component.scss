@@ -1,0 +1,63 @@
+.tag {
+  background: #fff;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  .tag-title {
+    text-align: center;
+    height: 48px;
+    line-height: 48px;
+  }
+  .delete {
+    margin-left: 12px;
+    color: rgb(36, 64, 143);
+    cursor: pointer;
+  }
+  .upload{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &:hover .saveUpload{
+      display: block;
+    }
+    span {
+      font-size: 12px;
+      color: #ff2268;
+    }
+    ::ng-deep .ant-upload-picture-card-wrapper {
+      width: unset;
+    }
+    .saveUpload {
+      cursor: pointer;
+      display: none;
+      font-size: 30px;
+      color: #2196F3;
+
+    }
+    .left {
+      display: flex;
+      align-items: center;
+    }
+
+    .mr15 {
+      margin-right: 15px;
+    }
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  ::ng-deep .ant-form-item {
+    width: 65%;
+  }
+  .save {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    button {
+      width: 30%;
+      height: 41px;
+    }
+  }
+}

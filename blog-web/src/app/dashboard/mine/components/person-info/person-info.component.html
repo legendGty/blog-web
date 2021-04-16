@@ -1,0 +1,222 @@
+<div class="person">
+  <div class="cover-main">
+    <div class="cover-tag">
+      <h3>
+        陌生人，谢谢你的访问！
+      </h3>
+      <span>
+        <i> {{ nowDate | date }}</i><br/>
+        <i>{{ userInfo?.desc }}</i>
+      </span>
+
+    </div>
+    <video muted width="100%" height="100%" src="./../../assets/video/text.mp4" autoplay="true" loop="loop"></video>
+  </div>
+  <!-- <nz-upload
+  class="avatar-uploader"
+  [nzAction]="url"
+  nzName="file"
+  nzListType="picture-card"
+  [nzShowButton]="showButton"
+  [nzBeforeUpload]=""
+  (nzChange)="handleChange($event)"
+  [nzRemove]="handleRemove()"
+>
+  <ng-container *ngIf="!avatarUrl">
+    <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+    <div class="ant-upload-text">Upload</div>
+  </ng-container>
+  <img *ngIf="avatarUrl" [src]="avatarUrl" style="width: 100%" />
+</nz-upload>
+  <div style="width: 150px;">
+    <nz-progress nzSize="small" [nzPercent]="percent"></nz-progress>
+  </div> -->
+  <!-- <div id ="cut-diamond">
+    <ul>
+      <li></li>
+      <li><span></span></li>
+      <li><span></span></li>
+      <li><span><span></span></span>
+      </li>
+      <li><span></span></li>
+      <li><span></span></li>
+      <li><span><span></span></span>
+      </li>
+      <li><span></span></li>
+      <li><span></span></li>
+      <li><span></span></li>
+  </ul>
+  </div> -->
+  <div class="mine">
+    <div class="left" style="width: 30%;">
+      <nz-card  nzTitle="个人资料" [nzExtra]="InfoCard" nzHoverable="true" [nzLoading]="'false'" [nzCover]="coverTemplate" [nzActions]="[github, weibo, alipay]">
+        <nz-card-meta [nzTitle]="titleTemplate" [nzDescription]="descriptionTemplate" [nzAvatar]="avatarTemplate"></nz-card-meta>
+        <ng-template #InfoCard>
+          <a *ngIf="isCurrentAdmin" (click)="goEditPage()">编辑</a>
+        </ng-template>
+        <ng-template #titleTemplate>
+          <span>
+            {{ userInfo?.userName }}
+          </span>
+        </ng-template>
+        <ng-template #descriptionTemplate>
+          <p>
+            <i class="icon-color-verify mr" nz-icon nzType="verified" nzTheme="outline"></i>
+            {{ userInfo?.work }}
+          </p>
+          <p>
+            <i class="icon-color-chart mr" nz-icon nzType="area-chart" nzTheme="outline"></i>
+            {{ userInfo?.skill }}
+          </p>
+          <p style="display: flex;">
+            <i class="icon-color-tag mr" nz-icon nzType="tags" nzTheme="fill"></i>
+            <span>
+              <nz-tag [nzColor]="'blue'">无敌小学生</nz-tag>
+              <nz-tag [nzColor]="'volcano'">前端大神</nz-tag>
+              <nz-tag [nzColor]="'green'">敲代码</nz-tag>
+            </span>
+          </p>
+        </ng-template>
+        <ng-template #avatarTemplate>
+          <nz-avatar [nzSrc]="baseUrl + userInfo?.headerImg"></nz-avatar>
+        </ng-template>
+        <ng-template #coverTemplate>
+          <!-- <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" /> -->
+          <video #vd muted width="100%" height="100%" src="./../../assets/video/text.mp4" autoplay="true" loop="loop"></video>
+        </ng-template>
+        <ng-template #github>
+          <i nz-icon nzType="github" nzTheme="outline"></i>
+        </ng-template>
+        <ng-template #weibo>
+          <i nz-icon nzType="weibo-circle" nzTheme="outline"></i>
+        </ng-template>
+        <ng-template #alipay>
+          <i nz-icon nzType="alipay" nzTheme="outline"></i>
+        </ng-template>
+      </nz-card>
+
+      <div class="calender" [ngStyle]="{border: '1px solid #d9d9d9', borderRadius: '4px' }">
+        <nz-calendar [nzFullscreen]="false" (nzSelectChange)="onValueChange($event)" (nzPanelChange)="onPanelChange($event)"></nz-calendar>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <nz-card class="card-item article-card"  nzTitle="文章模块" nzHoverable="true" [nzLoading]="'false'" [nzExtra]="articleCard">
+        <nz-card-meta  [nzDescription]="articleDesc"></nz-card-meta>
+        <ng-template #articleCard>
+          <a>More</a>
+        </ng-template>
+        <ng-template #articleDesc>
+          <p>一共发表了{{ articleInfo?.article_amount || 0 }}篇文章</p>
+          <p class="latest-article" *ngIf="latestArticle">
+            <span>
+              <span>
+                最新发表:
+                <a [routerLink]="['/article/detail', latestArticle?._id]">{{ latestArticle?.title}}</a>
+              </span>
+              <span class="ft12">
+                发布于：{{ latestArticle?.createdAt | date:'yyyy-MM-dd HH:mm:ss' }}
+              </span>
+            </span>
+            <img [src]="baseUrl + latestArticle?.headImgUrl" alt="">
+          </p>
+          <nz-row [nzGutter]="16">
+            <nz-col  nzSpan="6">
+              <nz-statistic [nzValue]="((articleInfo?.view_count || 0) | number)!" [nzTitle]="'观阅人数'" [nzPrefix]="articleView"></nz-statistic>
+              <ng-template #articleView><i nz-icon nzType="eye" nzTheme="fill"></i></ng-template>
+            </nz-col>
+            <nz-col nzSpan="6">
+              <nz-statistic [nzValue]="((articleInfo?.digger_count || 0) | number)!" [nzTitle]="'点赞人数'" [nzPrefix]="articleLike"></nz-statistic>
+              <ng-template #articleLike><i nz-icon nzType="like" nzTheme="fill"></i></ng-template>
+            </nz-col>
+            <nz-col nzSpan="6">
+              <nz-statistic [nzValue]="((articleInfo?.collection_count || 0) | number)!" [nzTitle]="'收藏人数'" [nzPrefix]="articleStar"></nz-statistic>
+              <ng-template #articleStar><i nz-icon nzType="star" nzTheme="fill"></i></ng-template>
+            </nz-col>
+            <nz-col nzSpan="6">
+              <nz-statistic [nzValue]="((articleInfo?.comment_count || 0) | number)!" [nzTitle]="'收获评论'" [nzPrefix]="articleComment"></nz-statistic>
+              <ng-template #articleComment><i nz-icon nzType="message" nzTheme="fill"></i></ng-template>
+            </nz-col>
+            <!-- <nz-col nzSpan="4">
+              <nz-statistic [nzValue]="((articleInfo?.collection_count || 0) | number)!" [nzTitle]="'收藏人数'" [nzPrefix]="articleStar"></nz-statistic>
+              <ng-template #articleStar><i nz-icon nzType="star"></i></ng-template>
+            </nz-col> -->
+          </nz-row>
+        </ng-template>
+      </nz-card>
+      <nz-card nzTitle="标签模块" class="card-item" nzHoverable="true" [nzLoading]="'false'" [nzExtra]="tagCard">
+        <nz-card-meta  [nzDescription]="tagDesc"></nz-card-meta>
+        <ng-template #tagCard>
+          <a [routerLink]="['/tag/subscribe']">标签管理</a>
+        </ng-template>
+      <ng-template #tagDesc>
+        <div class="tag-info">
+          <h3>个人标签 <i class="icon-color-tag mr" nz-icon nzType="tags" nzTheme="fill"></i></h3>
+
+          <span>
+            <nz-tag *ngFor="let tag of userInfo?.user_tags" class="nz-tag" [style.color]="tag.tag_color" [nzColor]="tag.tag_background">{{ tag.tag_content }}</nz-tag>
+          </span>
+        </div>
+
+        <div class="tag-info">
+          <h3>文章标签  <i class="icon-color-tag mr" nz-icon nzType="tags" nzTheme="fill"></i></h3>
+          <span>
+            <nz-tag [nzColor]="'blue'">无敌小学生</nz-tag>
+            <nz-tag [nzColor]="'volcano'">前端大神</nz-tag>
+            <nz-tag [nzColor]="'green'">敲代码</nz-tag>
+          </span>
+        </div>
+      </ng-template>
+      </nz-card>
+      <nz-card nzTitle="动态模块" class="card-item" nzHoverable="true" [nzLoading]="'false'" [nzExtra]="dynamicCard">
+        <nz-card-meta [nzDescription]="dynamicDesc"></nz-card-meta>
+        <ng-template #dynamicCard>
+          <a>More</a>
+        </ng-template>
+      <ng-template #dynamicDesc>
+        <i class="icon-color-tag mr" nz-icon nzType="tags" nzTheme="fill"></i>
+        <nz-row [nzGutter]="16">
+        <nz-col  nzSpan="6">
+          <nz-statistic [nzValue]="(1128 | number)!" [nzTitle]="'观阅人数'" [nzPrefix]="dynamicView"></nz-statistic>
+          <ng-template #dynamicView><i nz-icon nzType="eye"></i></ng-template>
+        </nz-col>
+        <nz-col nzSpan="6">
+          <nz-statistic [nzValue]="(1128 | number)!" [nzTitle]="'点赞人数'" [nzPrefix]="dynamicLike"></nz-statistic>
+          <ng-template #dynamicLike><i nz-icon nzType="like"></i></ng-template>
+        </nz-col>
+        <nz-col nzSpan="6">
+          <!-- <nz-statistic [nzValue]="(1128 | number)!" [nzTitle]="'收藏人数'" [nzPrefix]="articleStar"></nz-statistic>
+          <ng-template #articleStar><i nz-icon nzType="star"></i></ng-template> -->
+          latest new dynamic .....
+        </nz-col>
+        </nz-row>
+      </ng-template>
+      </nz-card>
+      <nz-card nzTitle="caogaoxiang" class="card-item" nzHoverable="true" [nzLoading]="'false'" [nzExtra]="dynamicCard">
+        <nz-card-meta [nzDescription]="dynamicDesc"></nz-card-meta>
+        <ng-template #dynamicCard>
+          <a>More</a>
+        </ng-template>
+      <ng-template #dynamicDesc>
+        <i class="icon-color-tag mr" nz-icon nzType="tags" nzTheme="fill"></i>
+        <nz-row [nzGutter]="16">
+        <nz-col  nzSpan="6">
+          <nz-statistic [nzValue]="(1128 | number)!" [nzTitle]="'观阅人数'" [nzPrefix]="dynamicView"></nz-statistic>
+          <ng-template #dynamicView><i nz-icon nzType="eye"></i></ng-template>
+        </nz-col>
+        <nz-col nzSpan="6">
+          <nz-statistic [nzValue]="(1128 | number)!" [nzTitle]="'点赞人数'" [nzPrefix]="dynamicLike"></nz-statistic>
+          <ng-template #dynamicLike><i nz-icon nzType="like"></i></ng-template>
+        </nz-col>
+        <nz-col nzSpan="6">
+          <!-- <nz-statistic [nzValue]="(1128 | number)!" [nzTitle]="'收藏人数'" [nzPrefix]="articleStar"></nz-statistic>
+          <ng-template #articleStar><i nz-icon nzType="star"></i></ng-template> -->
+          latest new dynamic .....
+        </nz-col>
+        </nz-row>
+      </ng-template>
+      </nz-card>
+    </div>
+  </div>
+</div>

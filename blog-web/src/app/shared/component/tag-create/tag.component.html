@@ -1,0 +1,131 @@
+
+<div class="tag">
+  <form nz-form [formGroup]="form" class="form">
+    <h3 class="tag-title">自定义标签</h3>
+    <nz-form-item>
+      <nz-form-label nzFor="name">标签内容</nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="name">
+        <nz-input-group nzPrefixIcon="tag">
+          <input type="text"
+            nz-input
+            formControlName="name"
+            placeholder="" />
+        </nz-input-group>
+
+          <ng-template #name>
+            <span *ngIf="form.get('name').dirty && form.get('name').hasError('required')">請輸入自定义标签内容</span>
+            <span *ngIf="form.get('name').dirty && form.get('name').hasError('maxlength')">标签内容不能超过10字符</span>
+          </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>标签背景</nz-form-label>
+      <nz-form-control>
+        <nz-input-group>
+          <input
+            #name
+            [style.background]="background"
+            [style.fontSize]="'12px'"
+            [(colorPicker)]="background"
+            [style.color]="'#fff'"
+            (colorPickerChange)="tagBackgroundChangeFun()"
+            [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']"
+            readonly
+            [value]="background"
+            style="width: 130px; height: 25px; border: 1px solid #ccc; cursor: pointer;"
+            title="单机选择背景颜色"
+          />
+          <i (click)="deleteColor(0)" class="delete"  title="清除背景" nz-icon nzType="delete" nzTheme="outline"></i>
+          <!-- <input  [style.background]="color" [style.color]="'#fff'" [value]="color" [(colorPicker)]="color" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']"/> -->
+        </nz-input-group>
+
+      </nz-form-control>
+      <nz-form-label>标签颜色</nz-form-label>
+      <nz-form-control>
+        <nz-input-group>
+          <input
+            [style.background]="'#fff'"
+            [style.fontSize]="'12px'"
+            [(colorPicker)]="color"
+            [style.color]="color"
+            (colorPickerChange)="tagColorChangeFun()"
+            [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']"
+            readonly
+            [value]="color"
+            style="width: 130px; height: 25px; border: 1px solid #ccc; cursor: pointer;"
+            title="单机选择字体颜色"
+          />
+          <i (click)="deleteColor(1)" class="delete" title="清除颜色" nz-icon nzType="delete" nzTheme="outline"></i>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label>标签icon</nz-form-label>
+      <nz-form-control>
+        <div class="upload">
+          <div class="left">
+              <img class="mr15" class="avatar" [src]="avatarUrl"/>
+              <nz-upload
+                class="avatar-uploader"
+                [nzAction]="url"
+                [nzShowUploadList]="false"
+                nzName="file"
+                nzListType="picture-card"
+                [nzBeforeUpload]="beforeUpload"
+                (nzChange)="handleChange($event)"
+              >
+                <ng-container>
+                  <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+                  <div class="ant-upload-text">上传</div>
+                </ng-container>
+                <!-- <img *ngIf="avatarUrl" [src]="avatarUrl" style="width: 100%" /> -->
+              </nz-upload>
+              <span>
+                <i>(支持 jpg、png、jpeg 格式大小 5M 以内的图片)</i>
+              </span>
+            </div>
+          </div>
+
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label>标签预览</nz-form-label>
+      <nz-form-control >
+        <!-- <button nz-button nzType="default" (click)="tagPreView()"><i nz-icon nzType="eye"></i>预览</button> -->
+        <ng-container *ngIf="form.get('name').value" [ngTemplateOutlet]="tag"></ng-container>
+        <ng-template #tag>
+          <nz-tag [style.color]="color" [nzColor]="background">{{ form.get('name').value }}</nz-tag>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <div class="save">
+
+    <button [disabled]="form.invalid" nz-button nzType="primary" (click)="saveTag()">
+      保存标签
+    </button>
+  </div>
+
+
+
+
+  <!-- <div>
+    <div class="aaa" #tagContainer>
+
+      <ng-container [ngTemplateOutlet]="tag"></ng-container>
+      <ng-template #tag>
+        <nz-tag [nzColor]="color">color</nz-tag>
+      </ng-template>
+
+    </div>
+  </div> -->
+
+
+<!--支持修改色值-->
+  <!-- <input  [style.background]="color" [style.color]="'#fff'" [value]="color" [(colorPicker)]="color" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']"
+  />
+  <input style="width: 16px; border: none;" [style.background]="color" [(colorPicker)]="color" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']"/> -->
+</div>
+

@@ -1,0 +1,161 @@
+.dynamic-pick {
+  background: #fff;
+  padding: 20px;
+  width: 70%;
+  .loading-lick {
+    padding: 15px;
+  }
+}
+.dynamic-input {
+  border-radius: 2px;
+  display: flex;
+  min-height: 100px;
+  flex-direction: column;
+  border: 1px solid hsla(0,0%,59.2%,.2);
+  background-color: rgba(226,230,235,.2);
+  &:focus-within{
+    border-color: #d2d3d3;
+    background: #fff;
+  }
+}
+.insert-content {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  align-self: center;
+  border: 1px solid rgba(151, 151, 151, 0.1);
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 90%;
+  background: #fff;
+  .left {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    > span:first-child {
+      font-size: 14px;
+    }
+    > span:nth-child(2) {
+      font-size: 12px;
+    }
+    > span:nth-child(3) {
+      font-size: 12px;
+      color: #0035ff8f;
+      margin-top: 6px;
+    }
+    .text-hidden {
+      display: inline-block;
+      width: 200px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .text2-hidden {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+    }
+  }
+  .right {
+    img {
+      width: 65px;
+      height: 65px;
+    }
+  }
+  .clear-link {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+  }
+}
+.data-input {
+  outline: none;
+  min-height: 39px;
+  text-indent: 1em;
+  &:empty::before{
+    color:lightgrey;
+    content:attr(placeholder);
+}
+
+  ::ng-deep img.emoji {
+    cursor: pointer;
+    height: 1.2em;
+    width: 1.2em;
+    margin: 0 .05em 0 .1em;
+    vertical-align: -0.1em;
+  }
+}
+
+.operation > ul {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 0px;
+  margin-top: 10px;
+  padding-left: 0px;
+  & > li {
+    margin-right: 20px;
+    cursor: pointer;
+    color: #027fff;
+    & > span {
+      margin-left: 4px;
+    }
+  }
+  & > li:first-child {
+    position: relative;;
+  }
+  &> li:last-child {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 0px;
+    align-items: center;
+    .tip {
+      margin-right: 15px;
+      color: rgb(39 40 41 / 49%);
+    }
+  }
+}
+
+::ng-deep .emoji-pick {
+  position: absolute;
+  width: 300px;
+  z-index: 10;
+  height: 200px;
+  top: 30px;
+  border-radius: 2px;
+  background-color: #fff;
+  box-shadow: 0 5px 18px 0 rgba(0,0,0,.16);
+  img.emoji {
+    cursor: pointer;
+    height: 1.6em;
+    width: 1.6em;
+    margin: 0 .05em 0 .1em;
+    vertical-align: -0.1em;
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    > li {
+      padding: 5px 4.5px;
+      cursor: pointer;
+    }
+  }
+}
+::ng-deep .link-card {
+  width: 300px;
+  .link-card-operation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    > span {
+      font-size: 12px;
+    }
+  }
+}

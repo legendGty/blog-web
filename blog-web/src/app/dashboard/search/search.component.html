@@ -1,0 +1,22 @@
+<div class="content">
+  <nz-tabset>
+    <nz-tab nzTitle="全部内容">
+      Content of Tab Pane 1
+    </nz-tab>
+    <nz-tab nzTitle="文章">
+      Content of Tab Pane 2
+    </nz-tab>
+    <nz-tab nzTitle="用户">
+      <nz-empty *ngIf="!users.length"></nz-empty>
+      <div class="" *ngIf="users.length">
+        <app-user-card *ngFor="let user of users" [user]="user"></app-user-card>
+      </div>
+    </nz-tab>
+    <nz-tab nzTitle="标签">
+      <nz-empty *ngIf="!tags.length"></nz-empty>
+      <div class="tag-content" *ngIf="tags.length">
+        <app-tag-card *ngFor="let tag of tags" [tag]="tag"></app-tag-card>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+</div>

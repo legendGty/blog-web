@@ -1,0 +1,19 @@
+<div class="user-card">
+  <div class="user-card-left">
+    <nz-avatar nzSize="large" nzIcon="user" [nzSrc]="user?.headerImg ? baseUrl + user?.headerImg : defaultImg"></nz-avatar>
+    <span class="desc">
+      <h3>
+        {{ user?.userName }}
+      </h3>
+      <span>
+        {{ user?.desc }}
+      </span>
+    </span>
+
+  </div>
+  <div class="user-card-right">
+    <button nz-button nzType="default">关注</button>
+    <!-- <button nz-button nzType="primary">进入主页</button> -->
+    <a [routerLink]="['/user', user?._id]">进入主页</a>
+  </div>
+</div>

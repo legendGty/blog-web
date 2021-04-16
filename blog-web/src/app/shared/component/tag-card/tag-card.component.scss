@@ -1,0 +1,28 @@
+.tag-card {
+  display: flex;
+  /* align-items: center; */
+  flex-direction: column;
+  width: 170px;
+  margin: 20px;
+  height: 240px;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 20px;
+  border: 2px solid #2196f31f;
+  &:hover {
+    border-color: transparent;
+    box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.12), 0 5px 12px 4px rgba(0, 0, 0, 0.09);
+  }
+  img {
+    width: 64px;
+  }
+
+  .nz-tag {
+    margin-right: 0;
+  }
+
+  .btn {
+    width: 60%;
+    border-radius: 15px;
+  }
+}

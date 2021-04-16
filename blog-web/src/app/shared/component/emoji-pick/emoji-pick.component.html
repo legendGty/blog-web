@@ -1,0 +1,78 @@
+<div class="dynamic-pick">
+  <div class="dynamic-input">
+    <div #input class="data-input"
+      contenteditable="true"
+      placeholder="快来发表你自己的动态吧！！！"
+      (keyup)="changeInputValue($event)">
+    </div>
+    <div *ngIf=linkParse class="insert-content">
+      <div class="left">
+        <h3 [title]="linkCallData?.title" class="text-hidden">{{ linkCallData?.title }}</h3>
+        <span [title]="linkCallData?.desc" class="text2-hidden">{{ linkCallData?.desc }}</span>
+        <span [title]="linkCallData?.url" class="text-hidden">{{ linkCallData?.url }}</span>
+      </div>
+      <div class="right">
+        <img [src]="linkCallData?.thumb ? (linkCallData?.thumb | safeUrl) : defaultLinkImg" alt="">
+      </div>
+      <i (click)="clearParseLink()" class="clear-link" nz-icon nzType="close-circle" nzTheme="fill"></i>
+    </div>
+    <div class="loading-lick" *ngIf="loadingLink">
+      <nz-spin nzTip="解析中">
+        <nz-alert nzType="info" nzMessage="正在解析网站中" nzDescription="这个过程所耗费的时间略长，请耐心等待"> </nz-alert>
+      </nz-spin>
+    </div>
+  </div>
+
+  <div class="operation">
+    <ul>
+      <li>
+        <i nz-icon nzType="smile" nzTheme="outline"></i>
+        <span (click)="showEmojiPick($event)">表情</span>
+        <div class="emoji-pick" *ngIf="emojiExit" (click)="$event.stopPropagation()">
+          <ul>
+            <li *ngFor="let emj of emoji" [innerHTML]="parse(emj)" (click) ="handleInput(emj)"></li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <i nz-icon nzType="picture" nzTheme="outline"></i>
+        <span>图片</span>
+      </li>
+      <li #hideLinkCard nz-popover [nzPopoverContent]="link"
+        [nzPopoverTrigger]="'click'"
+        nzPopoverPlacement="bottom"
+        [nzPopoverOverlayClassName]="'link-card'">
+        <i nz-icon nzType="link" nzTheme="outline"></i>
+        <span>链接</span>
+        <ng-template #link>
+          <form nz-form [formGroup]="form" class="form">
+            <nz-form-item>
+              <nz-form-label nzFor="url">链接</nz-form-label>
+              <nz-form-control nzHasFeedback [nzErrorTip]="">
+                <nz-input-group>
+                  <input type="text"
+                    nz-input
+                    formControlName="url"
+                    placeholder="请输入网站链接地址" />
+                </nz-input-group>
+<!--
+                  <ng-template #name>
+                    <span *ngIf="form.get('name').dirty && form.get('name').hasError('required')">請輸入自定义标签内容</span>
+                    <span *ngIf="form.get('name').dirty && form.get('name').hasError('maxlength')">标签内容不能超过10字符</span>
+                  </ng-template> -->
+              </nz-form-control>
+            </nz-form-item>
+            <div class="link-card-operation">
+              <span>自动抓取网页链接的标题和头部</span>
+              <button type="button" nz-button nzType="primary" [disabled]="loadingLink" (click)="getLinkUrl()">抓取</button>
+            </div>
+          </form>
+        </ng-template>
+      </li>
+      <li>
+        <div class="tip" data-v-1d649334="">Ctrl or ⌘ + Enter</div>
+        <button nz-button nzType="primary" [nzLoading]="loadingLink || loadingSubmit" (click)="submit()">发布</button>
+      </li>
+    </ul>
+  </div>
+</div>

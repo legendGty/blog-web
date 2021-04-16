@@ -1,0 +1,107 @@
+.content {
+  width: 70%;
+  .skeletion {
+    background: #fff;
+    padding: 10px;
+    margin-top: 16px;
+  }
+
+  .dynamic-card {
+    background: #fff;
+    margin-top: 15px;
+    padding: 16px;
+
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .card-header-left {
+      display: flex;
+      align-items: center;
+
+      .author-name {
+        display: flex;
+        flex-direction: column;
+        margin-left: 16px;
+
+        > span:first-child {
+          font-size: 16px;
+          font-weight: 600;
+          color: #2e3135;
+        }
+        > span:last-child {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  .card-content {
+    padding: 16px 10px 0 45px;
+    > p {
+      font-size: 14px;
+      color: #2e3135
+    }
+  }
+
+  .insert-content {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-self: center;
+    border: 1px solid rgba(151, 151, 151, 0.3);
+    padding: 16px;
+    margin-bottom: 20px;
+    width: 90%;
+    cursor: pointer;
+    background: #fff;
+    border-radius: 15px;
+    &:hover {
+      box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+    }
+    .left {
+      display: flex;
+      flex-direction: column;
+      width: 60%;
+      > span:first-child {
+        font-size: 14px;
+      }
+      > span:nth-child(2) {
+        font-size: 12px;
+      }
+      > span:nth-child(3) {
+        font-size: 12px;
+        color: #0035ff8f;
+        margin-top: 6px;
+      }
+      .text-hidden {
+        display: inline-block;
+        width: 200px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .text2-hidden {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+      }
+    }
+    .right {
+      img {
+        width: 65px;
+        height: 65px;
+      }
+    }
+    .clear-link {
+      position: absolute;
+      top: 0;
+      right: 0;
+      cursor: pointer;
+    }
+  }
+}
